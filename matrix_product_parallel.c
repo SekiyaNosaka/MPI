@@ -16,21 +16,21 @@ void initArray(double *arr1, double *arr2, double *arr3)
     // rotation matrix
     for(i=0;i<X;i++){
         for(j=0;j<Y;j++){
-            arr1[i*Y+j]=(double)rand()/RAND_MAX;
+            arr1[i*Y+j] = (double)rand()/RAND_MAX;
         }
     }
 
     // coordinate vector
     for(i=0;i<Y;i++){
         for(j=0;j<Z;j++){
-            arr2[i*Z+j]=(double)(rand()%10+1);
+            arr2[i*Z+j] = (double)(rand()%10+1);
         }
     }
 
     // result matrix
     for(i=0;i<X;i++){
         for(j=0;j<Z;j++){
-            arr3[i*Z+j]=0.0;
+            arr3[i*Z+j] = 0.0;
        }
     }
 }
@@ -44,7 +44,7 @@ void calcProduct(double *arr1, double *arr2, double *arr3, int rank)
         for(j=0;j<Z;j++){
             for(k=0;k<Y;k++){
                 //arr3[i*Z+j]+=arr1[i*Y+k]*arr2[k*Z+j];
-                arr3[j]+=arr1[i*Y+k]*arr2[k*Z+j];
+                arr3[j] += arr1[i*Y+k]*arr2[k*Z+j];
             }
         }
     }
@@ -56,7 +56,7 @@ void matMul(int row, int mid, int col,
             double *arr1_2, double *arr3_2, int rank, int size)
 {
     int i, j, k;
-    int rows = row / size;
+    int rows = row/size;
 
     MPI_Scatter(arr1,   rows*mid, MPI_DOUBLE,
                 arr1_2, rows*mid, MPI_DOUBLE,
@@ -66,9 +66,9 @@ void matMul(int row, int mid, int col,
 
     for(i=0;i<rows;i++){
         for(j=0;j<col;j++){
-            arr3_2[i*col+j]=0.0;
+            arr3_2[i*col+j] = 0.0;
             for(k=0;k<mid;k++){
-                arr3_2[i*col+j]+=arr1_2[i*mid+k]*arr2[k*col+j];
+                arr3_2[i*col+j] += arr1_2[i*mid+k]*arr2[k*col+j];
             }
         }
     }
@@ -113,7 +113,7 @@ void display(double *arr1, double *arr2, double *arr3)
 double calcFlops(double t, int size)
 {
     double flops;
-    flops = (double)(X/size)*Y*Z * 2.0 / t;
+    flops = (double)(X/size)*Y*Z*2.0/t;
 
     return flops;
 }
@@ -131,12 +131,12 @@ int main(int argc, char** argv)
     MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-    double *m_a = (double *)malloc(sizeof(double) * X*Y);
-    double *m_b = (double *)malloc(sizeof(double) * Y*Z);
-    double *m_c = (double *)malloc(sizeof(double) * X*Z);
+    double *m_a = (double *)malloc(sizeof(double)*X*Y);
+    double *m_b = (double *)malloc(sizeof(double)*Y*Z);
+    double *m_c = (double *)malloc(sizeof(double)*X*Z);
 
-    double *m_a_2 = (double *)malloc(sizeof(double) * (X/size)*Y);
-    double *m_c_2 = (double *)malloc(sizeof(double) * (X/size)*Z);
+    double *m_a_2 = (double *)malloc(sizeof(double)*(X/size)*Y);
+    double *m_c_2 = (double *)malloc(sizeof(double)*(X/size)*Z);
 
     initArray(m_a, m_b, m_c);
 
@@ -148,7 +148,7 @@ int main(int argc, char** argv)
            m_a_2, m_c_2, myrank, size);
 
     MPI_Barrier(MPI_COMM_WORLD);
-    t_1 = MPI_Wtime() - start;
+    t_1 = MPI_Wtime()-start;
 
     MPI_Reduce(&t_1, &t_1_reduce, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
     //MPI_Reduce(&t_1, &t_1_reduce, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);

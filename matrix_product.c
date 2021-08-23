@@ -15,21 +15,21 @@ void initArray(double *arr1, double *arr2, double *arr3)
     
     // rotation matrix
     for(i=0;i<X;i++){ for(j=0;j<Y;j++){
-            arr1[i*Y+j]=(double)rand()/RAND_MAX;
+            arr1[i*Y+j] = (double)rand()/RAND_MAX;
         }
     }
 
     // coordinate vector
     for(i=0;i<Y;i++){
         for(j=0;j<Z;j++){
-            arr2[i*Z+j]=(double)(rand()%10+1);
+            arr2[i*Z+j] = (double)(rand()%10+1);
         }
     }
 
     // result matrix
     for(i=0;i<X;i++){
         for(j=0;j<Z;j++){
-            arr3[i*Z+j]=0.0;
+            arr3[i*Z+j] = 0.0;
        }
     }
 }
@@ -41,7 +41,7 @@ void calcProduct(double *arr1, double *arr2, double *arr3)
     for(i=0;i<X;i++){
         for(j=0;j<Z;j++){
             for(k=0;k<Y;k++){
-                arr3[i*Z+j]+=arr1[i*Y+k]*arr2[k*Z+j];
+                arr3[i*Z+j] += arr1[i*Y+k]*arr2[k*Z+j];
             }
         }
     }
@@ -82,7 +82,7 @@ void display(double *arr1, double *arr2, double *arr3)
 double calcFlops(double t)
 {
     double flops;
-    flops = (X*Y*Z) * 2.0 / t;
+    flops = (X*Y*Z)*2.0/t;
 
     return flops;
 }
@@ -93,9 +93,9 @@ int main(int argc, char** argv)
     double t_1;
     double flops;
 
-    double *m_a = (double *)malloc(sizeof(double) * X*Y);
-    double *m_b = (double *)malloc(sizeof(double) * Y*Z);
-    double *m_c = (double *)malloc(sizeof(double) * X*Z);
+    double *m_a = (double *)malloc(sizeof(double)*X*Y);
+    double *m_b = (double *)malloc(sizeof(double)*Y*Z);
+    double *m_c = (double *)malloc(sizeof(double)*X*Z);
 
     initArray(m_a, m_b, m_c);
 
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
 
     calcProduct(m_a, m_b, m_c);
 
-    t_1 = MPI_Wtime() - start;
+    t_1 = MPI_Wtime()-start;
 
     flops = calcFlops(t_1);
 
