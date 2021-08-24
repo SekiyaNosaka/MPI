@@ -14,7 +14,8 @@ void initArray(double *arr1, double *arr2, double *arr3)
     int i, j;
     
     // rotation matrix
-    for(i=0;i<X;i++){ for(j=0;j<Y;j++){
+    for(i=0;i<X;i++){
+        for(j=0;j<Y;j++){
             arr1[i*Y+j] = (double)rand()/RAND_MAX;
         }
     }
