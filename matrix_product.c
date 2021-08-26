@@ -84,7 +84,6 @@ double calcFlops(double t)
 {
     double flops;
     flops = (X*Y*Z)*2.0/t;
-
     return flops;
 }
 
@@ -104,7 +103,7 @@ int main(int argc, char** argv)
 
     calcProduct(m_a, m_b, m_c);
 
-    t_1 = MPI_Wtime()-start;
+    t_1 = MPI_Wtime() - start;
 
     flops = calcFlops(t_1);
 

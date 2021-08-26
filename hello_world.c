@@ -1,5 +1,4 @@
 // OpenMPI Hello World
-
 // author: nosaka
 
 #include "mpi.h"

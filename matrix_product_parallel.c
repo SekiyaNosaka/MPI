@@ -114,7 +114,6 @@ double calcFlops(double t, int size)
 {
     double flops;
     flops = (double)(X/size)*Y*Z*2.0/t;
-
     return flops;
 }
 
